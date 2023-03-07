@@ -1,11 +1,13 @@
-import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 
 import Entypo from 'react-native-vector-icons/Entypo'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
+import axios from 'axios'
 
 const LoginScreen = () => {
 
@@ -14,13 +16,27 @@ const LoginScreen = () => {
     const [visiblePassword, setVisiblePassword] = useState(false)
     const [txtPassword, setTxtPassword] = useState()
     const [txtEmail, setTxtEmail] = useState()
+    const [isLoading, setIsLoading] = useState(false)
 
-    const handleLogin = () => {
-        if (txtEmail == 'admin' && txtPassword == '123') {
-            navigation.navigate('Home')
-        } else {
-            alert('Email or password was incorrect!')
-        }
+    const handleLogin = async () => {
+        setIsLoading(true)
+
+        await axios.get('https://httpbin.org/basic-auth/admin/hoc', {
+            auth: {
+                username: txtEmail,
+                password: txtPassword,
+            }
+        })
+            .then(res => {
+                console.log(res.status)
+                navigation.navigate('Home')
+            })
+            .catch(err => {
+                console.log(err)
+                alert('Wrong email or password!')
+            })
+
+        setIsLoading(false)
     }
 
     return (
@@ -49,13 +65,11 @@ const LoginScreen = () => {
                             color={'white'}
                             placeholder='Email'
                             placeholderTextColor={'#828187'}
-                            style={style.input}>
-                        </TextInput>
+                            style={style.input} />
                     </View>
 
                     <View style={style.inputWrapper}>
-                        <Fontisto name={visiblePassword ? 'unlocked' : 'locked'} size={20} color="#A4BCC1"
-                            onPress={() => setVisiblePassword(!visiblePassword)} />
+                        <Fontisto name={visiblePassword ? 'unlocked' : 'locked'} size={20} color="#A4BCC1" style={{marginLeft: 5,}} />
                         <TextInput
                             onChangeText={setTxtPassword}
                             value={txtPassword}
@@ -63,8 +77,9 @@ const LoginScreen = () => {
                             secureTextEntry={visiblePassword ? false : true}
                             placeholder=' Password'
                             placeholderTextColor={'#828187'}
-                            style={style.input}>
-                        </TextInput>
+                            style={style.input} />
+                        <Ionicons name={visiblePassword ? "md-eye-outline" : "md-eye-off-outline"}
+                            size={24} color="#A4BCC1" onPress={() => setVisiblePassword(!visiblePassword)} />
                     </View>
 
                     <TouchableOpacity style={style.forgetBtn}>
@@ -74,7 +89,9 @@ const LoginScreen = () => {
                     <TouchableOpacity style={style.loginBtn}
                         onPress={handleLogin}
                     >
-                        <Text style={style.loginLabel}>Log In</Text>
+                        {isLoading
+                            ? <ActivityIndicator color={'white'} size='large' />
+                            : <Text style={style.loginLabel}>Log In</Text>}
                     </TouchableOpacity>
 
                     <View style={style.sigupWrapper} >
@@ -165,7 +182,7 @@ const style = StyleSheet.create({
         height: 50,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: 24,
+        paddingHorizontal: 24,
         marginBottom: 10,
     },
     input: {

@@ -1,9 +1,10 @@
 import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 const HomeScreen = () => {
     const navigation = useNavigation()
+
     return (
         <View style={style.container}>
             <StatusBar backgroundColor={'#2D3748CC'} />
@@ -13,14 +14,14 @@ const HomeScreen = () => {
                     <View style={style.dot} />
                 </View>
                 <View style={style.textWrapper}>
-                    <Text style={style.headerTitle}>Homne Screen</Text>
+                    <Text style={style.headerTitle}>Home Screen</Text>
                     <Text style={style.headerSlogan}>Digital Hypnotherapy</Text>
                 </View>
             </View>
 
             <View style={style.body}>
                 <TouchableOpacity style={style.logoutBtn}
-                onPress={()=>navigation.navigate('Login')}
+                    onPress={() => navigation.navigate('Login')}
                 >
                     <Text style={style.logoutLabel}>Log Out</Text>
                 </TouchableOpacity>
@@ -74,7 +75,6 @@ const style = StyleSheet.create({
     },
     body: {
         marginHorizontal: 24,
-        marginTop: 36,
         position: 'absolute',
         bottom: 30,
         right: 0,
