@@ -1,4 +1,4 @@
-const { combineReducers, createStore } = require("redux");
+const { combineReducers, createStore, applyMiddleware } = require("redux");
 const { default: countReducer } = require("./reducers/countReducer");
 
 
