@@ -96,7 +96,9 @@ const LoginScreen = () => {
 
                     <View style={style.sigupWrapper} >
                         <Text style={{ color: '#FFFFFF', fontSize: 15 }}> Don't have an account? </Text>
-                        <TouchableOpacity style={style.sigupBtn}><Text style={style.sigupLabel}> Sign Up</Text></TouchableOpacity>
+                        <TouchableOpacity
+                        onPress={()=>navigation.navigate('Register')}
+                         style={style.sigupBtn}><Text style={style.sigupLabel}> Sign Up</Text></TouchableOpacity>
                     </View>
 
                     <View style={style.loginOther}>
