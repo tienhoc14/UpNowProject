@@ -1,9 +1,11 @@
 import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
 
 const HomeScreen = () => {
     const navigation = useNavigation()
+    const account = useSelector((store) => store.account)
 
     return (
         <View style={style.container}>
@@ -19,6 +21,8 @@ const HomeScreen = () => {
                 </View>
             </View>
 
+            <Text>{account.email} --- {account.password}</Text>
+            
             <View style={style.body}>
                 <TouchableOpacity style={style.logoutBtn}
                     onPress={() => navigation.navigate('Login')}

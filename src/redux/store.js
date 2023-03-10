@@ -1,9 +1,9 @@
-const { combineReducers, createStore, applyMiddleware } = require("redux");
-const { default: countReducer } = require("./reducers/countReducer");
+import loginReducer from "./reducers/loginReducer";
 
+const { combineReducers, createStore, applyMiddleware } = require("redux");
 
 const rootReducer = combineReducers({
-    count: countReducer
+    account: loginReducer
 })
 
 export const store = createStore(rootReducer)

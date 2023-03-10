@@ -1,19 +1,15 @@
 const initialState = {
-    count: 0
+    email: null,
+    password: null
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case 'COUNT_INCRESE':
+        case 'LOGIN':
             return {
                 ...state,
-                count: state.count + 1
-            }
-
-        case 'COUNT_DECRESE':
-            return {
-                ...state,
-                count: state.count - 1
+                email: action.acc.email,
+                password: action.acc.password
             }
 
         default:

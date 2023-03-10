@@ -8,10 +8,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../redux/actions/loginAction'
+import { color } from '../assets/color'
 
 const LoginScreen = () => {
 
     const navigation = useNavigation()
+    const dispatch = useDispatch()
 
     const [visiblePassword, setVisiblePassword] = useState(false)
     const [txtPassword, setTxtPassword] = useState()
@@ -21,7 +25,7 @@ const LoginScreen = () => {
     const handleLogin = async () => {
         setIsLoading(true)
 
-        await axios.get('https://httpbin.org/basic-auth/admin/hoc', {
+        await axios.get('https://httpbin.org/basic-auth/admin/123', {
             auth: {
                 username: txtEmail,
                 password: txtPassword,
@@ -29,6 +33,7 @@ const LoginScreen = () => {
         })
             .then(res => {
                 console.log(res.status)
+                dispatch(login(txtEmail, txtPassword))
                 navigation.navigate('Home')
             })
             .catch(err => {
@@ -55,7 +60,6 @@ const LoginScreen = () => {
 
             <View style={style.body}>
                 <Text style={style.bodyTitle}>Log In</Text>
-
                 <View style={style.bodyForm}>
                     <View style={style.inputWrapper}>
                         <Entypo name="mail" size={20} color="#A4BCC1" />
@@ -69,7 +73,7 @@ const LoginScreen = () => {
                     </View>
 
                     <View style={style.inputWrapper}>
-                        <Fontisto name={visiblePassword ? 'unlocked' : 'locked'} size={20} color="#A4BCC1" style={{marginLeft: 5,}} />
+                        <Fontisto name={'locked'} size={20} color={color.icon} style={{ marginLeft: 5, }} />
                         <TextInput
                             onChangeText={setTxtPassword}
                             value={txtPassword}
@@ -97,8 +101,8 @@ const LoginScreen = () => {
                     <View style={style.sigupWrapper} >
                         <Text style={{ color: '#FFFFFF', fontSize: 15 }}> Don't have an account? </Text>
                         <TouchableOpacity
-                        onPress={()=>navigation.navigate('Register')}
-                         style={style.sigupBtn}><Text style={style.sigupLabel}> Sign Up</Text></TouchableOpacity>
+                            onPress={() => navigation.navigate('Register')}
+                            style={style.sigupBtn}><Text style={style.sigupLabel}> Sign Up</Text></TouchableOpacity>
                     </View>
 
                     <View style={style.loginOther}>
@@ -127,7 +131,7 @@ export default LoginScreen
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#2D3748CC',
+        backgroundColor: color.backgound,
     },
     header: {
         flexDirection: 'row',
@@ -154,13 +158,13 @@ const style = StyleSheet.create({
         fontFamily: 'Outfit-Black',
         fontWeight: 900,
         fontSize: 24,
-        color: '#FFFFFF',
+        color: color.whiteColor,
     },
     headerSlogan: {
         fontFamily: 'Outfit-Black',
         fontWeight: 400,
         fontSize: 14.07,
-        color: '#2D8CFF',
+        color: color.slogan,
     },
     textWrapper: {
         justifyContent: 'center'
@@ -173,13 +177,13 @@ const style = StyleSheet.create({
         fontFamily: 'Outfit-Black',
         fontWeight: 900,
         fontSize: 24,
-        color: '#FFFFFF',
+        color: color.whiteColor,
         alignSelf: 'flex-start',
         marginLeft: 14,
         marginBottom: 28,
     },
     inputWrapper: {
-        backgroundColor: '#00000033',
+        backgroundColor: color.inputBG,
         borderRadius: 100,
         height: 50,
         flexDirection: 'row',
@@ -196,21 +200,21 @@ const style = StyleSheet.create({
         marginTop: 4,
     },
     forget: {
-        color: '#FFFFFF',
+        color: color.whiteColor,
         fontSize: 15,
         fontWeight: 400,
     },
     loginBtn: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FF5789',
+        backgroundColor: color.primaryColor,
         height: 52,
         borderRadius: 30,
         marginTop: 32,
         marginBottom: 26,
     },
     loginLabel: {
-        color: '#FFFFFF',
+        color: color.whiteColor,
         fontSize: 18,
         fontFamily: 'Outfit-Black',
         fontWeight: 800,
@@ -221,7 +225,7 @@ const style = StyleSheet.create({
         marginBottom: 41,
     },
     sigupLabel: {
-        color: '#FF5889',
+        color: color.primaryColor,
         fontWeight: 700,
         fontSize: 15
     },
@@ -237,7 +241,7 @@ const style = StyleSheet.create({
     fbLabel: {
         fontWeight: 500,
         fontSize: 16,
-        color: '#FFFFFF',
+        color: color.whiteColor,
     },
     btnOther: {
         height: 52,
