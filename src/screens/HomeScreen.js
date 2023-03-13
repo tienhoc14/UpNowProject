@@ -1,11 +1,19 @@
 import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, { } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const HomeScreen = () => {
     const navigation = useNavigation()
+    const dispatch = useDispatch()
     const account = useSelector((store) => store.account)
+
+    const handleLogout = () => {
+        dispatch({
+            type: 'LOGOUT',
+        })
+        navigation.replace("Login")
+    }
 
     return (
         <View style={style.container}>
@@ -21,11 +29,11 @@ const HomeScreen = () => {
                 </View>
             </View>
 
-            <Text>{account.email} --- {account.password}</Text>
-            
+            <Text>User: {account.user}</Text>
+
             <View style={style.body}>
                 <TouchableOpacity style={style.logoutBtn}
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={handleLogout}
                 >
                     <Text style={style.logoutLabel}>Log Out</Text>
                 </TouchableOpacity>

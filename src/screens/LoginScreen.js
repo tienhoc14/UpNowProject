@@ -7,8 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
-import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { login } from '../redux/actions/loginAction'
 import { color } from '../assets/color'
 
@@ -25,21 +24,15 @@ const LoginScreen = () => {
     const handleLogin = async () => {
         setIsLoading(true)
 
-        await axios.get('https://httpbin.org/basic-auth/admin/123', {
-            auth: {
-                username: txtEmail,
-                password: txtPassword,
-            }
-        })
-            .then(res => {
-                console.log(res.status)
-                dispatch(login(txtEmail, txtPassword))
-                navigation.navigate('Home')
+        dispatch(login(txtEmail, txtPassword))
+            .then((res) => {
+                if (res == 'success') {
+                    navigation.replace('Home')
+                } else {
+                    alert('Wrong email or password')
+                }
             })
-            .catch(err => {
-                console.log(err)
-                alert('Wrong email or password!')
-            })
+            .catch((err) => console.log(err))
 
         setIsLoading(false)
     }

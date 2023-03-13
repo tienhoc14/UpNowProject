@@ -1,6 +1,6 @@
 const initialState = {
-    email: null,
-    password: null
+    user: null,
+    isLoggedIn: false,
 }
 
 export default (state = initialState, action) => {
@@ -8,8 +8,15 @@ export default (state = initialState, action) => {
         case 'LOGIN':
             return {
                 ...state,
-                email: action.acc.email,
-                password: action.acc.password
+                user: action.payload.user,
+                isLoggedIn: true
+            }
+
+        case 'LOGOUT':
+            return {
+                ...state,
+                user: null,
+                isLoggedIn: false
             }
 
         default:
