@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
+import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, TextInput, ActivityIndicator, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 
 import Entypo from 'react-native-vector-icons/Entypo'
@@ -12,7 +12,6 @@ import { login } from '../redux/actions/loginAction'
 import { color } from '../assets/color'
 
 const LoginScreen = () => {
-
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
@@ -31,14 +30,13 @@ const LoginScreen = () => {
                 } else {
                     alert('Wrong email or password')
                 }
+                setIsLoading(false)
             })
             .catch((err) => console.log(err))
-
-        setIsLoading(false)
     }
 
     return (
-        <View style={style.container}>
+        <SafeAreaView style={style.container}>
             <StatusBar backgroundColor={'#2D3748CC'} />
             <View style={style.header}>
                 <View style={style.headerLogo}>
@@ -115,7 +113,7 @@ const LoginScreen = () => {
                 </View>
             </View>
 
-        </View>
+        </SafeAreaView>
     )
 }
 

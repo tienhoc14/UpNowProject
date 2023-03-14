@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,20 +16,9 @@ const HomeScreen = () => {
     }
 
     return (
-        <View style={style.container}>
+        <SafeAreaView style={style.container}>
             <StatusBar backgroundColor={'#2D3748CC'} />
-            <View style={style.header}>
-                <View style={style.headerLogo}>
-                    <Image source={require('../assets/images/logo.png')} />
-                    <View style={style.dot} />
-                </View>
-                <View style={style.textWrapper}>
-                    <Text style={style.headerTitle}>Home Screen</Text>
-                    <Text style={style.headerSlogan}>Digital Hypnotherapy</Text>
-                </View>
-            </View>
 
-            <Text>User: {account.user}</Text>
 
             <View style={style.body}>
                 <TouchableOpacity style={style.logoutBtn}
@@ -38,7 +27,7 @@ const HomeScreen = () => {
                     <Text style={style.logoutLabel}>Log Out</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 

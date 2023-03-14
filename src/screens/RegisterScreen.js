@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useState } from 'react'
 import { color } from '../assets/color'
 import AppInput from '../components/AppInput'
@@ -14,7 +14,7 @@ const RegisterScreen = () => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
   return (
-    <View style={style.container}>
+    <SafeAreaView style={style.container}>
       <View style={style.header}>
         <View style={style.headerLogo}>
           <Image source={require('../assets/images/logo.png')} />
@@ -27,31 +27,33 @@ const RegisterScreen = () => {
       </View>
 
       <View style={style.body}>
-        <Text style={style.bodyTitle}>Register</Text>
+        <View>
+          <Text style={style.bodyTitle}>Register</Text>
 
-        <View style={style.bodyForm}>
-          <AppInput placeholder={'First name'}
-            icon={<Ionicons name="person" size={20} color={color.icon} />} />
-          <AppInput placeholder={'Last name'}
-            icon={<Ionicons name="person" size={20} color={color.icon} />} />
-          <AppInput placeholder={'Email'}
-            icon={<Entypo name="mail" size={20} color={color.icon} />} />
-          <AppInput placeholder={' Password'}
-            icon={<Fontisto name={'locked'} size={20} color={color.icon} />} />
-        </View>
+          <View style={style.bodyForm}>
+            <AppInput placeholder={'First name'}
+              icon={<Ionicons name="person" size={20} color={color.icon} />} />
+            <AppInput placeholder={'Last name'}
+              icon={<Ionicons name="person" size={20} color={color.icon} />} />
+            <AppInput placeholder={'Email'}
+              icon={<Entypo name="mail" size={20} color={color.icon} />} />
+            <AppInput placeholder={' Password'}
+              icon={<Fontisto name={'locked'} size={20} color={color.icon} />} />
+          </View>
 
-        <View style={style.confirmWrapper}>
-          <CheckBox
-            tintColors={{ true: color.primaryColor, false: color.icon }}
-            disabled={false}
-            value={toggleCheckBox}
-            onValueChange={(newValue) => setToggleCheckBox(newValue)}
-          />
-          <Text style={style.txtConfirm}>
-            by clicking on “Register” you agree to our {"\n"}
-            <Text style={{ color: color.primaryColor }}> Terms & Conditions </Text>and
-            <Text style={{ color: color.primaryColor }}> Privacy Policy </Text>
-          </Text>
+          <View style={style.confirmWrapper}>
+            <CheckBox
+              tintColors={{ true: color.primaryColor, false: color.icon }}
+              disabled={false}
+              value={toggleCheckBox}
+              onValueChange={(newValue) => setToggleCheckBox(newValue)}
+            />
+            <Text style={style.txtConfirm}>
+              by clicking on “Register” you agree to our {"\n"}
+              <Text style={{ color: color.primaryColor }}> Terms & Conditions </Text>and
+              <Text style={{ color: color.primaryColor }}> Privacy Policy </Text>
+            </Text>
+          </View>
         </View>
 
         <View style={style.bottom}>
@@ -71,7 +73,7 @@ const RegisterScreen = () => {
           </Text>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -131,6 +133,7 @@ const style = StyleSheet.create({
     marginHorizontal: 32,
     marginTop: 36,
     flex: 1,
+    justifyContent: 'space-between'
   },
   txtConfirm: {
     fontFamily: 'Outfit-Black',
@@ -146,10 +149,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   bottom: {
-    position: 'absolute',
-    bottom: 43,
-    left: 0,
-    right: 0
+    marginBottom: 40,
   },
   btnRegister: {
     backgroundColor: color.primaryColor,
