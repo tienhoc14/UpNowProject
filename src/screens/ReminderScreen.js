@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import AppContainer from '../components/AppContainer'
 import AppMenu from '../components/AppMenu'
 
 const ReminderScreen = () => {
+
+
     return (
         <AppContainer>
             <AppMenu />

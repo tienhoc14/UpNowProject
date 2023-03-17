@@ -1,14 +1,19 @@
-import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native'
-import React, { } from 'react'
+import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, SafeAreaView, Alert, Button } from 'react-native'
+import React, { useCallback, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { color } from '../assets/color'
 import AppMenu from '../components/AppMenu'
+import CalendarPicker from 'react-native-calendar-picker';
 
 const HomeScreen = () => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const account = useSelector((store) => store.account)
+
+    const [startDate, setStartDate] = useState()
+    const [endDate, setEndDate] = useState()
+    const [markedDates, setMarkedDates] = useState()
 
     const handleLogout = () => {
         dispatch({
@@ -16,6 +21,36 @@ const HomeScreen = () => {
         })
         navigation.replace("Login")
     }
+
+    const markedDates1 = {
+        '2023-03-21': { startingDay: true, color: color.primaryColor, textColor: 'white' },
+        '2023-03-22': { color: color.primaryColor, textColor: 'white' },
+        '2023-03-23': { color: color.primaryColor, textColor: 'white' },
+        '2023-03-24': { color: color.primaryColor, textColor: 'white' },
+        '2023-03-25': { endingDay: true, color: color.primaryColor, textColor: 'white' }
+    }
+
+    const onHandleDateRange = useCallback(
+        (date) => {
+            if (!startDate || startDate && endDate) {
+                setStartDate(date.dateString)
+                setEndDate()
+            } else {
+                if (startDate > date.dateString) {
+                    setEndDate(startDate)
+                    setStartDate(date.dateString)
+
+                } else {
+                    setEndDate(date.dateString)
+                }
+            }
+            setMarkedDates({
+                [startDate]: { startingDay: true, color: color.primaryColor, textColor: 'white' },
+                [endDate]: { endingDay: true, color: color.primaryColor, textColor: 'white' }
+            })
+        },
+        [startDate, endDate],
+    )
 
     return (
         <SafeAreaView style={style.container}>
@@ -33,6 +68,15 @@ const HomeScreen = () => {
                         <Text style={style.streakCurrent}>Current streak: 1</Text>
                         <Text style={style.streakLongest}>Longest streak: 2</Text>
                     </View>
+                </View>
+
+                <View style={style.calendarWrapper}>
+                    <CalendarPicker
+                        allowRangeSelection={true}
+                        todayBackgroundColor={color.icon}
+                        textStyle={{ color: color.whiteColor }}
+                        selectedDayColor={color.primaryColor}
+                    />
                 </View>
             </View>
 
@@ -83,6 +127,7 @@ const style = StyleSheet.create({
         backgroundColor: '#00000033',
         borderRadius: 20,
         marginTop: 10,
+        marginBottom: 40,
     },
     streakLogo: {
         marginRight: 20,
@@ -92,8 +137,8 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 15
     },
-    streakLongest:{
+    streakLongest: {
         color: '#828187',
         fontSize: 13,
-    }
+    },
 })
