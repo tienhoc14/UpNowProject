@@ -2,6 +2,8 @@ import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, SafeAreaVie
 import React, { } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
+import { color } from '../assets/color'
+import AppMenu from '../components/AppMenu'
 
 const HomeScreen = () => {
     const navigation = useNavigation()
@@ -17,8 +19,9 @@ const HomeScreen = () => {
 
     return (
         <SafeAreaView style={style.container}>
-            <StatusBar backgroundColor={'#2D3748CC'} />
+            <StatusBar backgroundColor={color.backgound} />
 
+            <AppMenu />
 
             <View style={style.body}>
                 <TouchableOpacity style={style.logoutBtn}
@@ -36,43 +39,7 @@ export default HomeScreen
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#2D3748CC',
-    },
-    header: {
-        flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderBottomColor: '#2D8CFF',
-    },
-    headerLogo: {
-        width: 50.35,
-        height: 50.35,
-        borderRadius: 79.14,
-        backgroundColor: '#343542',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 20,
-    },
-    dot: {
-        width: 8.39,
-        height: 8.39,
-        backgroundColor: '#57C1EA',
-        borderRadius: 5,
-        position: 'absolute'
-    },
-    headerTitle: {
-        fontFamily: 'Outfit-Black',
-        fontWeight: 900,
-        fontSize: 24,
-        color: '#FFFFFF',
-    },
-    headerSlogan: {
-        fontFamily: 'Outfit-Black',
-        fontWeight: 400,
-        fontSize: 14.07,
-        color: '#2D8CFF',
-    },
-    textWrapper: {
-        justifyContent: 'center'
+        backgroundColor: color.backgound,
     },
     body: {
         marginHorizontal: 24,
@@ -96,4 +63,10 @@ const style = StyleSheet.create({
         fontFamily: 'Outfit-Black',
         fontWeight: 800,
     },
+    logoHome: {
+        width: 63,
+        height: 54,
+        marginTop: 10,
+        marginLeft: 20,
+    }
 })

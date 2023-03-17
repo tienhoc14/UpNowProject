@@ -1,5 +1,5 @@
-import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, TextInput, ActivityIndicator, SafeAreaView } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, TextInput, ActivityIndicator, SafeAreaView, Linking, Alert } from 'react-native'
+import React, { useCallback, useState } from 'react'
 
 import Entypo from 'react-native-vector-icons/Entypo'
 import Fontisto from 'react-native-vector-icons/Fontisto'
@@ -26,14 +26,24 @@ const LoginScreen = () => {
         dispatch(login(txtEmail, txtPassword))
             .then((res) => {
                 if (res == 'success') {
-                    navigation.replace('Home')
+                    navigation.replace('Drawer')
                 } else {
-                    alert('Wrong email or password')
+                    Alert.alert('Wrong email or password')
                 }
                 setIsLoading(false)
             })
             .catch((err) => console.log(err))
     }
+
+    const urlFb = 'https://www.facebook.com/'
+    const urlApple = 'https://appleid.apple.com/sign-in/'
+
+    const onLoginOther = (url) => useCallback(
+        async () => {
+            await Linking.openURL(url)
+        },
+        [url],
+    )
 
     return (
         <SafeAreaView style={style.container}>
@@ -102,11 +112,16 @@ const LoginScreen = () => {
                         <View style={style.line} />
                     </View>
 
-                    <TouchableOpacity style={[style.fbBtn, style.btnOther]}>
+                    <TouchableOpacity
+                        onPress={onLoginOther(urlFb)}
+                        style={[style.fbBtn, style.btnOther]}>
                         <MaterialIcons name="facebook" size={24} color="#FFFFFF" style={{ position: 'absolute', left: 20 }} />
                         <Text style={style.fbLabel}>Log in with Facebook</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[style.appleBtn, style.btnOther]}>
+
+                    <TouchableOpacity
+                        onPress={onLoginOther(urlApple)}
+                        style={[style.appleBtn, style.btnOther]}>
                         <AntDesign name="apple1" size={24} color="#FFFFFF" style={{ position: 'absolute', left: 20 }} />
                         <Text style={style.fbLabel}>Log in with Apple</Text>
                     </TouchableOpacity>

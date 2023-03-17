@@ -1,11 +1,12 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import AppContainer from '../components/AppContainer'
+import AppMenu from '../components/AppMenu'
 
 const SettingScreen = () => {
     return (
-        <View>
-            <Text>SettingScreen</Text>
-        </View>
+        <AppContainer>
+            <AppMenu />
+        </AppContainer>
     )
 }
 
