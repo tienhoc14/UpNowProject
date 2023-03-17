@@ -23,7 +23,20 @@ const HomeScreen = () => {
 
             <AppMenu />
 
-            <View style={style.body}>
+            <View style={style.body} >
+                <View style={style.streakWrapper}>
+                    <View style={style.streakLogo}>
+                        <Image source={require('../assets/images/steak-logo.png')} />
+                    </View>
+
+                    <View style={style.streakData}>
+                        <Text style={style.streakCurrent}>Current streak: 1</Text>
+                        <Text style={style.streakLongest}>Longest streak: 2</Text>
+                    </View>
+                </View>
+            </View>
+
+            <View style={style.logoutWrapper}>
                 <TouchableOpacity style={style.logoutBtn}
                     onPress={handleLogout}
                 >
@@ -42,11 +55,11 @@ const style = StyleSheet.create({
         backgroundColor: color.backgound,
     },
     body: {
+        flex: 1,
+        marginHorizontal: 20,
+    },
+    logoutWrapper: {
         marginHorizontal: 24,
-        position: 'absolute',
-        bottom: 30,
-        right: 0,
-        left: 0,
     },
     logoutBtn: {
         alignItems: 'center',
@@ -54,8 +67,8 @@ const style = StyleSheet.create({
         backgroundColor: '#FF5789',
         height: 52,
         borderRadius: 30,
-        marginTop: 32,
-        marginBottom: 26,
+        marginTop: 30,
+        marginBottom: 40,
     },
     logoutLabel: {
         color: '#FFFFFF',
@@ -63,10 +76,24 @@ const style = StyleSheet.create({
         fontFamily: 'Outfit-Black',
         fontWeight: 800,
     },
-    logoHome: {
-        width: 63,
-        height: 54,
+    streakWrapper: {
+        flexDirection: 'row',
+        padding: 10,
+        alignItems: 'center',
+        backgroundColor: '#00000033',
+        borderRadius: 20,
         marginTop: 10,
-        marginLeft: 20,
+    },
+    streakLogo: {
+        marginRight: 20,
+    },
+    streakCurrent: {
+        color: color.whiteColor,
+        fontWeight: 'bold',
+        fontSize: 15
+    },
+    streakLongest:{
+        color: '#828187',
+        fontSize: 13,
     }
 })
