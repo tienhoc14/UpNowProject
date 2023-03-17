@@ -10,15 +10,19 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import StackNavigation from './src/navigation/StackNavigation';
 import { Provider } from 'react-redux';
-import { store } from './src/redux/store';
+import { persistor, store } from './src/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import AppLoading from './src/components/AppLoading';
 
 function App(): JSX.Element {
 
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <StackNavigation />
-      </NavigationContainer>
+      <PersistGate loading={<AppLoading />} persistor={persistor} >
+        <NavigationContainer>
+          <StackNavigation />
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }

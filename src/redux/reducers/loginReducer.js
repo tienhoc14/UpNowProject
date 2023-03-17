@@ -1,6 +1,7 @@
 const initialState = {
     user: null,
     isLoggedIn: false,
+    token: null
 }
 
 export default (state = initialState, action) => {
@@ -9,14 +10,16 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload.user,
-                isLoggedIn: true
+                isLoggedIn: true,
+                token: 'logged-in-upnow'
             }
 
         case 'LOGOUT':
             return {
                 ...state,
                 user: null,
-                isLoggedIn: false
+                isLoggedIn: false,
+                token: null
             }
 
         default:
