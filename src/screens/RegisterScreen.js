@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import { color } from '../assets/color'
 import AppInput from '../components/AppInput'
@@ -7,11 +7,38 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import CheckBox from '@react-native-community/checkbox';
 import { useNavigation } from '@react-navigation/native'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../firebaseConfig'
+import { useDispatch } from 'react-redux'
 
 const RegisterScreen = () => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
 
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+
+  const onHandleRegister = async () => {
+    setIsLoading(true)
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        dispatch({
+          type: 'LOGIN',
+          payload: {
+            email: userCredential.user.email,
+            token: userCredential.user.uid
+          }
+        })
+        navigation.replace('Drawer')
+      })
+      .catch((err) => {
+        console.log(err.message)
+        setIsLoading(false)
+      })
+  }
 
   return (
     <SafeAreaView style={style.container}>
@@ -35,9 +62,15 @@ const RegisterScreen = () => {
               icon={<Ionicons name="person" size={20} color={color.icon} />} />
             <AppInput placeholder={'Last name'}
               icon={<Ionicons name="person" size={20} color={color.icon} />} />
-            <AppInput placeholder={'Email'}
+            <AppInput
+              value={email}
+              onChangeText={setEmail}
+              placeholder={'Email'}
               icon={<Entypo name="mail" size={20} color={color.icon} />} />
-            <AppInput placeholder={' Password'}
+            <AppInput
+              value={password}
+              onChangeText={setPassword}
+              placeholder={' Password'}
               icon={<Fontisto name={'locked'} size={20} color={color.icon} />} />
           </View>
 
@@ -57,8 +90,11 @@ const RegisterScreen = () => {
         </View>
 
         <View style={style.bottom}>
-          <TouchableOpacity style={style.btnRegister} >
-            <Text style={style.btnLabel}>Register</Text>
+          <TouchableOpacity
+            onPress={onHandleRegister}
+            style={style.btnRegister} >
+            {isLoading ? <ActivityIndicator size={'large'} color={color.whiteColor} />
+              : <Text style={style.btnLabel}>Register</Text>}
           </TouchableOpacity>
 
           <Text

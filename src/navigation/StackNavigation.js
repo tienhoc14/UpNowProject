@@ -18,7 +18,6 @@ const StackNavigation = () => {
         >
             {userData.isLoggedIn ? <>
                 <Stack.Screen name='Drawer' component={DrawerNavigation} />
-                <Stack.Screen name='Login' component={LoginScreen} />
             </>
                 : <>
                     <Stack.Screen name='Login' component={LoginScreen} />

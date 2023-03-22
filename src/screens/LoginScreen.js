@@ -28,7 +28,7 @@ const LoginScreen = () => {
                 if (res == 'success') {
                     navigation.replace('Drawer')
                 } else {
-                    Alert.alert('Wrong email or password')
+                    Alert.alert('Login fail', res)
                 }
                 setIsLoading(false)
             })

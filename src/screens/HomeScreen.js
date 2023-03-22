@@ -15,8 +15,8 @@ const HomeScreen = () => {
     const [endDate, setEndDate] = useState()
     const [markedDates, setMarkedDates] = useState()
 
-    const handleLogout = () => {
-        dispatch({
+    const handleLogout = async () => {
+        await dispatch({
             type: 'LOGOUT',
         })
         navigation.replace("Login")

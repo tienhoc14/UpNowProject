@@ -1,7 +1,7 @@
 const initialState = {
-    user: null,
+    email: null,
+    token: null,
     isLoggedIn: false,
-    token: null
 }
 
 export default (state = initialState, action) => {
@@ -9,17 +9,17 @@ export default (state = initialState, action) => {
         case 'LOGIN':
             return {
                 ...state,
-                user: action.payload.user,
+                email: action.payload.email,
+                token: action.payload.token,
                 isLoggedIn: true,
-                token: 'logged-in-upnow'
             }
 
         case 'LOGOUT':
             return {
                 ...state,
                 user: null,
+                token: null,
                 isLoggedIn: false,
-                token: null
             }
 
         default:

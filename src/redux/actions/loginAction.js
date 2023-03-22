@@ -1,22 +1,19 @@
-import axios from 'axios'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../../firebaseConfig';
 
 export const login = (email, password) => async (dispatch) => {
-    return await axios.get('https://httpbin.org/basic-auth/admin/123',
-        {
-            auth: {
-                username: email,
-                password: password,
-            }
-        })
-        .then(res => {
-            console.log(res.status)
+    return await signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
             dispatch({
                 type: 'LOGIN',
-                payload: res.data,
-            });
+                payload: {
+                    email: userCredential.user.email,
+                    token: userCredential.user.uid
+                }
+            })
             return 'success'
         })
         .catch(err => {
-            console.log(err)
+            return err.code
         })
 };
