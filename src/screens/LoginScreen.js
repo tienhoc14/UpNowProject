@@ -10,20 +10,20 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { login } from '../redux/actions/loginAction'
 import { color } from '../assets/color'
+import { Formik } from 'formik'
+import { LoginSchema } from '../assets/validation'
 
 const LoginScreen = () => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
     const [visiblePassword, setVisiblePassword] = useState(false)
-    const [txtPassword, setTxtPassword] = useState()
-    const [txtEmail, setTxtEmail] = useState()
     const [isLoading, setIsLoading] = useState(false)
 
-    const handleLogin = async () => {
+    const handleLogin = async (email, passwod) => {
         setIsLoading(true)
 
-        dispatch(login(txtEmail, txtPassword))
+        dispatch(login(email, passwod))
             .then((res) => {
                 if (res == 'success') {
                     navigation.replace('Drawer')
@@ -62,42 +62,58 @@ const LoginScreen = () => {
             <View style={style.body}>
                 <Text style={style.bodyTitle}>Log In</Text>
                 <View style={style.bodyForm}>
-                    <View style={style.inputWrapper}>
-                        <Entypo name="mail" size={20} color="#A4BCC1" />
-                        <TextInput
-                            onChangeText={setTxtEmail}
-                            value={txtEmail}
-                            color={'white'}
-                            placeholder='Email'
-                            placeholderTextColor={'#828187'}
-                            style={style.input} />
-                    </View>
-
-                    <View style={style.inputWrapper}>
-                        <Fontisto name={'locked'} size={20} color={color.icon} style={{ marginLeft: 5, }} />
-                        <TextInput
-                            onChangeText={setTxtPassword}
-                            value={txtPassword}
-                            color={'white'}
-                            secureTextEntry={visiblePassword ? false : true}
-                            placeholder=' Password'
-                            placeholderTextColor={'#828187'}
-                            style={style.input} />
-                        <Ionicons name={visiblePassword ? "md-eye-outline" : "md-eye-off-outline"}
-                            size={24} color="#A4BCC1" onPress={() => setVisiblePassword(!visiblePassword)} />
-                    </View>
-
-                    <TouchableOpacity style={style.forgetBtn}>
-                        <Text style={style.forget}>Forget password?</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={style.loginBtn}
-                        onPress={handleLogin}
+                    <Formik
+                        initialValues={{ email: '', password: '' }}
+                        onSubmit={values => handleLogin(values.email, values.password)}
+                        validationSchema={LoginSchema}
                     >
-                        {isLoading
-                            ? <ActivityIndicator color={'white'} size='large' />
-                            : <Text style={style.loginLabel}>Log In</Text>}
-                    </TouchableOpacity>
+                        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                            <>
+                                <View style={style.inputWrapper}>
+                                    <Entypo name="mail" size={20} color="#A4BCC1" />
+                                    <TextInput
+                                        onChangeText={handleChange('email')}
+                                        onBlur={handleBlur('email')}
+                                        value={values.email}
+                                        color={'white'}
+                                        placeholder='Email'
+                                        placeholderTextColor={'#828187'}
+                                        style={style.input} />
+                                    {errors.email && touched.email ?
+                                        <Text style={style.sigupLabel}>{errors.email}</Text> : null}
+                                </View>
+
+                                <View style={style.inputWrapper}>
+                                    <Fontisto name={'locked'} size={20} color={color.icon} style={{ marginLeft: 5, }} />
+                                    <TextInput
+                                        onChangeText={handleChange('password')}
+                                        value={values.password}
+                                        color={'white'}
+                                        secureTextEntry={visiblePassword ? false : true}
+                                        placeholder=' Password'
+                                        placeholderTextColor={'#828187'}
+                                        style={style.input} />
+                                    <Ionicons name={visiblePassword ? "md-eye-outline" : "md-eye-off-outline"}
+                                        size={24} color="#A4BCC1" onPress={() => setVisiblePassword(!visiblePassword)} />
+                                </View>
+                                {errors.password && touched.password ?
+                                    <Text style={style.sigupLabel}>{errors.password}</Text> : null}
+
+
+                                <TouchableOpacity style={style.forgetBtn}>
+                                    <Text style={style.forget}>Forget password?</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={style.loginBtn}
+                                    onPress={handleSubmit}
+                                >
+                                    {isLoading
+                                        ? <ActivityIndicator color={'white'} size='large' />
+                                        : <Text style={style.loginLabel}>Log In</Text>}
+                                </TouchableOpacity>
+                            </>
+                        )}
+                    </Formik>
 
                     <View style={style.sigupWrapper} >
                         <Text style={{ color: '#FFFFFF', fontSize: 15 }}> Don't have an account? </Text>

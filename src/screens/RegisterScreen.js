@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, ActivityIndicator, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { color } from '../assets/color'
 import AppInput from '../components/AppInput'
@@ -10,6 +10,8 @@ import { useNavigation } from '@react-navigation/native'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../firebaseConfig'
 import { useDispatch } from 'react-redux'
+import { Formik } from 'formik'
+import { RegisterSchema } from '../assets/validation'
 
 const RegisterScreen = () => {
   const navigation = useNavigation()
@@ -17,10 +19,8 @@ const RegisterScreen = () => {
 
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
 
-  const onHandleRegister = async () => {
+  const onHandleRegister = async (firstName, lastName, email, password) => {
     setIsLoading(true)
 
     await createUserWithEmailAndPassword(auth, email, password)
@@ -35,7 +35,7 @@ const RegisterScreen = () => {
         navigation.replace('Drawer')
       })
       .catch((err) => {
-        console.log(err.message)
+        Alert.alert('Register fail', err.code)
         setIsLoading(false)
       })
   }
@@ -53,62 +53,95 @@ const RegisterScreen = () => {
         </View>
       </View>
 
+
       <View style={style.body}>
-        <View>
-          <Text style={style.bodyTitle}>Register</Text>
+        <Formik
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: ''
+          }}
+          onSubmit={values => onHandleRegister(values.firstName, values.lastName, values.email, values.password)}
+          validationSchema={RegisterSchema}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+            <>
+              <View>
+                <Text style={style.bodyTitle}>Register</Text>
 
-          <View style={style.bodyForm}>
-            <AppInput placeholder={'First name'}
-              icon={<Ionicons name="person" size={20} color={color.icon} />} />
-            <AppInput placeholder={'Last name'}
-              icon={<Ionicons name="person" size={20} color={color.icon} />} />
-            <AppInput
-              value={email}
-              onChangeText={setEmail}
-              placeholder={'Email'}
-              icon={<Entypo name="mail" size={20} color={color.icon} />} />
-            <AppInput
-              value={password}
-              onChangeText={setPassword}
-              placeholder={' Password'}
-              icon={<Fontisto name={'locked'} size={20} color={color.icon} />} />
-          </View>
+                <View style={style.bodyForm}>
+                  <AppInput
+                    value={values.firstName}
+                    onChangeText={handleChange('firstName')}
+                    placeholder={'First name'}
+                    icon={<Ionicons name="person" size={20} color={color.icon} />} >
+                    {errors.firstName && touched.lastName ? <Text style={style.txtConfirm}>{errors.firstName}</Text> : null}
+                  </AppInput>
+                  <AppInput
+                    value={values.lastName}
+                    onChangeText={handleChange('lastName')}
+                    placeholder={'Last name'}
+                    icon={<Ionicons name="person" size={20} color={color.icon} />} >
 
-          <View style={style.confirmWrapper}>
-            <CheckBox
-              tintColors={{ true: color.primaryColor, false: color.icon }}
-              disabled={false}
-              value={toggleCheckBox}
-              onValueChange={(newValue) => setToggleCheckBox(newValue)}
-            />
-            <Text style={style.txtConfirm}>
-              by clicking on “Register” you agree to our {"\n"}
-              <Text style={{ color: color.primaryColor }}> Terms & Conditions </Text>and
-              <Text style={{ color: color.primaryColor }}> Privacy Policy </Text>
-            </Text>
-          </View>
-        </View>
+                    {errors.lastName && touched.lastName ? <Text style={style.txtConfirm}>{errors.lastName}</Text> : null}
+                  </AppInput>
+                  <AppInput
+                    value={values.email}
+                    onChangeText={handleChange('email')}
+                    placeholder={'Email'}
+                    icon={<Entypo name="mail" size={20} color={color.icon} />} >
 
-        <View style={style.bottom}>
-          <TouchableOpacity
-            onPress={onHandleRegister}
-            style={style.btnRegister} >
-            {isLoading ? <ActivityIndicator size={'large'} color={color.whiteColor} />
-              : <Text style={style.btnLabel}>Register</Text>}
-          </TouchableOpacity>
+                    {errors.email && touched.email ? <Text style={style.txtConfirm}>{errors.email}</Text> : null}
+                  </AppInput>
+                  <AppInput
+                    value={values.password}
+                    onChangeText={handleChange('password')}
+                    placeholder={' Password'}
+                    icon={<Fontisto name={'locked'} size={20} color={color.icon} />} />
+                  {errors.password && touched.password ? <Text style={style.txtConfirm}>{errors.password}</Text> : null}
+                </View>
 
-          <Text
-            style={{
-              alignSelf: 'center',
-              fontFamily: 'Outfit-Black',
-              fontWeight: 400,
-              fontSize: 15,
-              color: color.whiteColor,
-            }}>Already have an account?
-            <Text style={style.txtLogin} onPress={() => navigation.goBack()} > Log In</Text>
-          </Text>
-        </View>
+                <View style={style.confirmWrapper}>
+                  <CheckBox
+                    tintColors={{ true: color.primaryColor, false: color.icon }}
+                    disabled={false}
+                    value={toggleCheckBox}
+                    onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                  />
+                  <Text style={style.txtConfirm}>
+                    by clicking on “Register” you agree to our {"\n"}
+                    <Text style={{ color: color.primaryColor }}> Terms & Conditions </Text>and
+                    <Text style={{ color: color.primaryColor }}> Privacy Policy </Text>
+                  </Text>
+                </View>
+              </View>
+
+              <View style={style.bottom}>
+                <TouchableOpacity
+                  onPress={handleSubmit}
+                  style={style.btnRegister} >
+                  {isLoading ? <ActivityIndicator size={'large'} color={color.whiteColor} />
+                    : <Text style={style.btnLabel}>Register</Text>}
+                </TouchableOpacity>
+
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    fontFamily: 'Outfit-Black',
+                    fontWeight: 400,
+                    fontSize: 15,
+                    color: color.whiteColor,
+                  }}>Already have an account?
+                  <Text style={style.txtLogin} onPress={() => navigation.goBack()} > Log In</Text>
+                </Text>
+              </View>
+            </>
+          )}
+
+        </Formik>
       </View>
+
     </SafeAreaView>
   )
 }
@@ -177,12 +210,12 @@ const style = StyleSheet.create({
     fontSize: 15,
     color: color.whiteColor,
     lineHeight: 22,
-    marginLeft: 15,
   },
   confirmWrapper: {
     marginTop: 20,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between'
   },
   bottom: {
     marginBottom: 40,

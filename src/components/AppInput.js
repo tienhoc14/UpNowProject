@@ -2,7 +2,7 @@ import { View, Text, TextInput, StyleSheet } from 'react-native'
 import React from 'react'
 import { color } from '../assets/color'
 
-const AppInput = ({ icon, placeholder, value, onChangeText }) => {
+const AppInput = ({ icon, placeholder, value, onChangeText, children }) => {
     return (
         <View style={style.inputWrapper}>
             {icon}
@@ -13,6 +13,7 @@ const AppInput = ({ icon, placeholder, value, onChangeText }) => {
                 placeholder={placeholder}
                 placeholderTextColor={'#828187'}
                 style={style.input} />
+            {children}
         </View>
     )
 }
