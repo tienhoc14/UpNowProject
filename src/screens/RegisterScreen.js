@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, ActivityIndicator, Alert, Modal, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import { color } from '../assets/color'
 import AppInput from '../components/AppInput'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import Fontisto from 'react-native-vector-icons/Fontisto'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import CheckBox from '@react-native-community/checkbox';
 import { useNavigation } from '@react-navigation/native'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
@@ -19,6 +20,8 @@ const RegisterScreen = () => {
 
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
   const onHandleRegister = async (firstName, lastName, email, password) => {
     setIsLoading(true)
@@ -52,7 +55,6 @@ const RegisterScreen = () => {
           <Text style={style.headerSlogan}>Digital Hypnotherapy</Text>
         </View>
       </View>
-
 
       <View style={style.body}>
         <Formik
@@ -91,14 +93,17 @@ const RegisterScreen = () => {
                     onChangeText={handleChange('email')}
                     placeholder={'Email'}
                     icon={<Entypo name="mail" size={20} color={color.icon} />} >
-
                     {errors.email && touched.email ? <Text style={style.txtConfirm}>{errors.email}</Text> : null}
                   </AppInput>
                   <AppInput
+                    secureTextEntry={!isVisible}
                     value={values.password}
                     onChangeText={handleChange('password')}
                     placeholder={' Password'}
-                    icon={<Fontisto name={'locked'} size={20} color={color.icon} />} />
+                    icon={<Fontisto name={'locked'} size={20} color={color.icon} />} >
+                    <Ionicons name={isVisible ? "md-eye-outline" : "md-eye-off-outline"}
+                      size={24} color="#A4BCC1" onPress={() => setIsVisible(!isVisible)} />
+                  </AppInput>
                   {errors.password && touched.password ? <Text style={style.txtConfirm}>{errors.password}</Text> : null}
                 </View>
 
@@ -111,7 +116,9 @@ const RegisterScreen = () => {
                   />
                   <Text style={style.txtConfirm}>
                     by clicking on “Register” you agree to our {"\n"}
-                    <Text style={{ color: color.primaryColor }}> Terms & Conditions </Text>and
+                    <Text
+                      onPress={() => setModalVisible(true)}
+                      style={{ color: color.primaryColor }}> Terms & Conditions </Text>and
                     <Text style={{ color: color.primaryColor }}> Privacy Policy </Text>
                   </Text>
                 </View>
@@ -144,7 +151,30 @@ const RegisterScreen = () => {
         </Formik>
       </View>
 
-    </SafeAreaView>
+      {/* Modal */}
+      <Modal
+        animationType='slide'
+        visible={modalVisible}
+        transparent={true}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={style.modalCentered}>
+          <View style={style.modalView}>
+            <View style={style.modalHeader}>
+              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Terms & Conditions</Text>
+              <AntDesign name="closecircle" size={24} color={color.primaryColor} style={{ position: 'absolute', right: 10 }}
+                onPress={() => setModalVisible(false)} />
+            </View>
+
+            <View style={style.modalBody}>
+
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+    </SafeAreaView >
   )
 }
 
@@ -240,5 +270,23 @@ const style = StyleSheet.create({
     fontWeight: 700,
     fontSize: 15,
     color: color.primaryColor,
+  },
+  // modal
+  modalCentered: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalView: {
+    backgroundColor: color.whiteColor,
+    borderRadius: 20,
+    width: '90%',
+    height: '75%'
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10,
   }
 })

@@ -89,7 +89,7 @@ const LoginScreen = () => {
                                         onChangeText={handleChange('password')}
                                         value={values.password}
                                         color={'white'}
-                                        secureTextEntry={visiblePassword ? false : true}
+                                        secureTextEntry={!visiblePassword}
                                         placeholder=' Password'
                                         placeholderTextColor={'#828187'}
                                         style={style.input} />

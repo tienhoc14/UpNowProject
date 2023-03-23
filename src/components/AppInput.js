@@ -2,11 +2,12 @@ import { View, Text, TextInput, StyleSheet } from 'react-native'
 import React from 'react'
 import { color } from '../assets/color'
 
-const AppInput = ({ icon, placeholder, value, onChangeText, children }) => {
+const AppInput = ({ icon, placeholder, value, onChangeText, children, secureTextEntry }) => {
     return (
         <View style={style.inputWrapper}>
             {icon}
             <TextInput
+                secureTextEntry={secureTextEntry}
                 onChangeText={onChangeText}
                 value={value}
                 color={'white'}
