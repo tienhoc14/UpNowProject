@@ -22,5 +22,8 @@ const RegisterSchema = Yup.object().shape({
         .min(6, 'Password must be 6 characters minimum.')
 });
 
+const ResetPwSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Required'),
+});
 
-export { LoginSchema, RegisterSchema }
+export { LoginSchema, RegisterSchema, ResetPwSchema }

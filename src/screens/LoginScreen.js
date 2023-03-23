@@ -100,7 +100,9 @@ const LoginScreen = () => {
                                     <Text style={style.sigupLabel}>{errors.password}</Text> : null}
 
 
-                                <TouchableOpacity style={style.forgetBtn}>
+                                <TouchableOpacity
+                                    onPress={() => { navigation.navigate('Forget') }}
+                                    style={style.forgetBtn}>
                                     <Text style={style.forget}>Forget password?</Text>
                                 </TouchableOpacity>
 

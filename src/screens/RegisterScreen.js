@@ -119,8 +119,10 @@ const RegisterScreen = () => {
 
               <View style={style.bottom}>
                 <TouchableOpacity
+                  disabled={toggleCheckBox ? false : true}
                   onPress={handleSubmit}
-                  style={style.btnRegister} >
+                  style={[style.btnRegister,
+                  { backgroundColor: toggleCheckBox ? color.primaryColor : color.inputBG, }]} >
                   {isLoading ? <ActivityIndicator size={'large'} color={color.whiteColor} />
                     : <Text style={style.btnLabel}>Register</Text>}
                 </TouchableOpacity>
@@ -221,7 +223,6 @@ const style = StyleSheet.create({
     marginBottom: 40,
   },
   btnRegister: {
-    backgroundColor: color.primaryColor,
     alignItems: 'center',
     justifyContent: 'center',
     height: 52,
