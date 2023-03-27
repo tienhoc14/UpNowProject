@@ -137,7 +137,7 @@ const RegisterScreen = () => {
                 <Text
                   style={{
                     alignSelf: 'center',
-                    fontFamily: 'Outfit-Black',
+                    // fontFamily: 'Outfit-Black',
                     fontWeight: 400,
                     fontSize: 15,
                     color: color.whiteColor,
@@ -207,13 +207,13 @@ const style = StyleSheet.create({
     position: 'absolute'
   },
   headerTitle: {
-    fontFamily: 'Outfit-Black',
+    // fontFamily: 'Outfit-Black',
     fontWeight: 900,
     fontSize: 24,
     color: color.whiteColor,
   },
   headerSlogan: {
-    fontFamily: 'Outfit-Black',
+    // fontFamily: 'Outfit-Black',
     fontWeight: 400,
     fontSize: 14.07,
     color: color.slogan,
@@ -222,7 +222,7 @@ const style = StyleSheet.create({
     justifyContent: 'center'
   },
   bodyTitle: {
-    fontFamily: 'Outfit-Black',
+    // fontFamily: 'Outfit-Black',
     fontWeight: 900,
     fontSize: 24,
     color: color.whiteColor,
@@ -237,7 +237,7 @@ const style = StyleSheet.create({
     justifyContent: 'space-between'
   },
   txtConfirm: {
-    fontFamily: 'Outfit-Black',
+    // fontFamily: 'Outfit-Black',
     fontWeight: 400,
     fontSize: 15,
     color: color.whiteColor,
@@ -261,12 +261,12 @@ const style = StyleSheet.create({
   },
   btnLabel: {
     color: color.whiteColor,
-    fontFamily: 'Outfit-Black',
+    // fontFamily: 'Outfit-Black',
     fontWeight: 800,
     fontSize: 18,
   },
   txtLogin: {
-    fontFamily: 'Outfit-Black',
+    // fontFamily: 'Outfit-Black',
     fontWeight: 700,
     fontSize: 15,
     color: color.primaryColor,

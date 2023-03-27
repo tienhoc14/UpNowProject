@@ -179,13 +179,13 @@ const style = StyleSheet.create({
         position: 'absolute'
     },
     headerTitle: {
-        fontFamily: 'Outfit-Black',
+        // fontFamily: 'Outfit-Black',
         fontWeight: 900,
         fontSize: 24,
         color: color.whiteColor,
     },
     headerSlogan: {
-        fontFamily: 'Outfit-Black',
+        // fontFamily: 'Outfit-Black',
         fontWeight: 400,
         fontSize: 14.07,
         color: color.slogan,
@@ -198,7 +198,7 @@ const style = StyleSheet.create({
         marginTop: 36,
     },
     bodyTitle: {
-        fontFamily: 'Outfit-Black',
+        // fontFamily: 'Outfit-Black',
         fontWeight: 900,
         fontSize: 24,
         color: color.whiteColor,
@@ -240,7 +240,7 @@ const style = StyleSheet.create({
     loginLabel: {
         color: color.whiteColor,
         fontSize: 18,
-        fontFamily: 'Outfit-Black',
+        // fontFamily: 'Outfit-Black',
         fontWeight: 800,
     },
     sigupWrapper: {
