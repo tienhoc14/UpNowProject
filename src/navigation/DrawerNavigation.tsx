@@ -1,9 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import HomeScreen from '../screens/HomeScreen'
-import ReminderScreen from '../screens/ReminderScreen'
-import SettingScreen from '../screens/SettingScreen'
 import CustomDrawer from '../components/CustomDrawer'
 
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
@@ -11,6 +8,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import Octicons from 'react-native-vector-icons/Octicons'
 import Feather from 'react-native-vector-icons/Feather'
+import { color } from '../assets/color'
+import HomeScreen from '../screens/home/HomeScreen'
+import ReminderScreen from '../screens/reminder/ReminderScreen'
+import SettingScreen from '../screens/settings/SettingScreen'
+import RewardsScreen from '../screens/rewards/RewardsScreen'
 
 const Drawer = createDrawerNavigator()
 
@@ -21,11 +23,10 @@ const DrawerNavigation = () => {
             screenOptions={{
                 headerShown: false,
                 overlayColor: 'transparent',
-                drawerLabelStyle: { marginLeft: -10, color: '#959EA7', },
-                headerTintColor: 'white',
-                drawerActiveBackgroundColor: '#00000033',
-                drawerActiveTintColor: '#F77098',
-                drawerInactiveTintColor: '#959EA7',
+                drawerLabelStyle: { marginLeft: -10 },
+                drawerActiveBackgroundColor: color.inputBG,
+                drawerActiveTintColor: color.drawerActive,
+                drawerInactiveTintColor: color.drawerInactive,
             }}
             drawerContent={props => <CustomDrawer {...props} />}
         >
@@ -54,7 +55,7 @@ const DrawerNavigation = () => {
                     return <Octicons name="video" size={size} color={color} />
                 }
             }} />
-            <Drawer.Screen name='Rewards' component={SettingScreen} options={{
+            <Drawer.Screen name='Rewards' component={RewardsScreen} options={{
                 drawerIcon: ({ color, size }) => {
                     return <Feather name="award" size={size} color={color} />
                 }

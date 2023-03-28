@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, SafeAreaView, Platform } from 'react-native'
 import React from 'react'
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
 import { color } from '../assets/color'
 
-const CustomDrawer = (props) => {
+const CustomDrawer = (props: any) => {
     return (
         <View style={style.background}>
 
@@ -30,16 +30,17 @@ const style = StyleSheet.create({
         flex: 1,
         backgroundColor: color.backgound,
         paddingLeft: 30,
+        paddingTop: Platform.OS === 'ios' ? 30 : 0
     },
 
     avatar: {
         width: 65,
         height: 65,
-        backgroundColor: '#C9C9C9',
+        backgroundColor: color.avatarBG,
         borderRadius: 50,
     },
     avatarWrapper: {
-        backgroundColor: '#4B5161',
+        backgroundColor: color.avatarCircle,
         alignSelf: 'baseline',
         borderRadius: 50,
         padding: 5,

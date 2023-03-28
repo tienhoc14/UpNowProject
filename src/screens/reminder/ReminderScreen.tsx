@@ -1,9 +1,9 @@
 import React from 'react'
 import { Text } from 'react-native'
 import { useSelector } from 'react-redux'
-import { auth } from '../../firebaseConfig'
-import AppContainer from '../components/AppContainer'
-import AppMenu from '../components/AppMenu'
+import { auth } from '../../../firebaseConfig'
+import AppContainer from '../../components/AppContainer'
+import AppMenu from '../../components/AppMenu'
 
 const ReminderScreen = () => {
 

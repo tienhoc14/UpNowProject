@@ -2,11 +2,11 @@ import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, SafeAreaVie
 import React, { } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { color } from '../assets/color'
-import AppMenu from '../components/AppMenu'
+import { color } from '../../assets/color'
+import AppMenu from '../../components/AppMenu'
 import CalendarPicker from 'react-native-calendar-picker';
 
-const HomeScreen = () => {
+function HomeScreen(): JSX.Element {
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
@@ -17,7 +17,7 @@ const HomeScreen = () => {
         navigation.replace("Login")
     }
 
-    const onDateChange = (date, type) => {
+    const onDateChange = (date: Date, type: string) => {
         console.log(type, ': ', date);
     }
 
@@ -29,7 +29,7 @@ const HomeScreen = () => {
             <View style={style.body} >
                 <View style={style.streakWrapper}>
                     <View style={style.streakLogo}>
-                        <Image source={require('../assets/images/steak-logo.png')} />
+                        <Image source={require('../../assets/images/steak-logo.png')} />
                     </View>
 
                     <View style={style.streakData}>
@@ -77,14 +77,14 @@ const style = StyleSheet.create({
     logoutBtn: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FF5789',
+        backgroundColor: color.primaryColor,
         height: 52,
         borderRadius: 30,
         marginTop: 30,
         marginBottom: 40,
     },
     logoutLabel: {
-        color: '#FFFFFF',
+        color: color.whiteColor,
         fontSize: 18,
         fontWeight: 800,
     },
@@ -92,7 +92,7 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         padding: 10,
         alignItems: 'center',
-        backgroundColor: '#00000033',
+        backgroundColor: color.inputBG,
         borderRadius: 20,
         marginTop: 10,
         marginBottom: 40,
@@ -106,7 +106,7 @@ const style = StyleSheet.create({
         fontSize: 15
     },
     streakLongest: {
-        color: '#828187',
+        color: color.inputPH,
         fontSize: 13,
     },
 })

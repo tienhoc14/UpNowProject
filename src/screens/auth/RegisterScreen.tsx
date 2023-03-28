@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, ActivityIndicator, Alert, Modal, Pressable } from 'react-native'
-import React, { useState } from 'react'
-import { color } from '../assets/color'
-import AppInput from '../components/AppInput'
+import React, { useCallback, useState } from 'react'
+import { color } from '../../assets/color'
+import AppInput from '../../components/AppInput'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import Fontisto from 'react-native-vector-icons/Fontisto'
@@ -9,10 +9,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import CheckBox from '@react-native-community/checkbox';
 import { useNavigation } from '@react-navigation/native'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../firebaseConfig'
+import { auth } from '../../../firebaseConfig'
 import { useDispatch } from 'react-redux'
 import { Formik } from 'formik'
-import { RegisterSchema } from '../assets/validation'
+import { RegisterSchema } from '../../assets/validation'
 
 const RegisterScreen = () => {
   const navigation = useNavigation()
@@ -25,31 +25,64 @@ const RegisterScreen = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [titleModal, setTitleModal] = useState()
 
-  const onHandleRegister = async (firstName, lastName, email, password) => {
-    setIsLoading(true)
+  const onHandleRegister = useCallback(
+    async (firstName: string, lastName: string, email: string, password: string) => {
+      setIsLoading(true)
 
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        dispatch({
-          type: 'LOGIN',
-          payload: {
-            email: userCredential.user.email,
-            token: userCredential.user.uid
-          }
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          dispatch({
+            type: 'LOGIN',
+            payload: {
+              email: userCredential.user.email,
+              token: userCredential.user.uid
+            }
+          })
+          navigation.replace('Drawer')
         })
-        navigation.replace('Drawer')
-      })
-      .catch((err) => {
-        Alert.alert('Register fail', err.code)
-        setIsLoading(false)
-      })
-  }
+        .catch((err) => {
+          Alert.alert('Register fail', err.code)
+          setIsLoading(false)
+        })
+    },
+    [],
+  )
+
+  const onTogglePassword = useCallback(
+    () => {
+      setIsVisible(!isVisible)
+    },
+    [isVisible],
+  )
+
+  const onShowModal = useCallback(
+    (title: string) => {
+      setModalVisible(true)
+      setTitleModal(title)
+    },
+    [modalVisible],
+  )
+
+  const onHideModal = useCallback(
+    () => {
+      setModalVisible(false)
+    },
+    [modalVisible],
+  )
+
+
+  const onPressLogin = useCallback(
+    () => {
+      navigation.goBack()
+    },
+    [],
+  )
 
   return (
     <SafeAreaView style={style.container}>
       <View style={style.header}>
         <View style={style.headerLogo}>
-          <Image source={require('../assets/images/logo.png')} />
+          <Image source={require('../../assets/images/logo.png')} />
           <View style={style.dot} />
         </View>
         <View style={style.textWrapper}>
@@ -104,7 +137,7 @@ const RegisterScreen = () => {
                     placeholder={' Password'}
                     icon={<Fontisto name={'locked'} size={20} color={color.icon} />} >
                     <Ionicons name={isVisible ? "md-eye-outline" : "md-eye-off-outline"}
-                      size={24} color="#A4BCC1" onPress={() => setIsVisible(!isVisible)} />
+                      size={24} color={color.icon} onPress={onTogglePassword} />
                   </AppInput>
                   {errors.password && touched.password ? <Text style={style.txtConfirm}>{errors.password}</Text> : null}
                 </View>
@@ -119,16 +152,10 @@ const RegisterScreen = () => {
                   <Text style={style.txtConfirm}>
                     by clicking on “Register” you agree to our {"\n"}
                     <Text
-                      onPress={() => {
-                        setModalVisible(true)
-                        setTitleModal('Terms & Conditions')
-                      }}
+                      onPress={() => onShowModal('Terms & Conditions')}
                       style={{ color: color.primaryColor }}> Terms & Conditions </Text>and
                     <Text
-                      onPress={() => {
-                        setModalVisible(true)
-                        setTitleModal('Privacy Policy')
-                      }}
+                      onPress={() => onShowModal('Privacy Policy')}
                       style={{ color: color.primaryColor }}> Privacy Policy </Text>
                   </Text>
                 </View>
@@ -145,14 +172,8 @@ const RegisterScreen = () => {
                 </TouchableOpacity>
 
                 <Text
-                  style={{
-                    alignSelf: 'center',
-                    // fontFamily: 'Outfit-Black',
-                    fontWeight: 400,
-                    fontSize: 15,
-                    color: color.whiteColor,
-                  }}>Already have an account?
-                  <Text style={style.txtLogin} onPress={() => navigation.goBack()} > Log In</Text>
+                  style={style.txtAccount}>Already have an account?
+                  <Text style={style.txtLogin} onPress={onPressLogin} > Log In</Text>
                 </Text>
               </View>
             </>
@@ -166,15 +187,14 @@ const RegisterScreen = () => {
         animationType='slide'
         visible={modalVisible}
         transparent={true}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
+        onRequestClose={onHideModal}>
         <View style={style.modalCentered}>
           <View style={style.modalView}>
             <View style={style.modalHeader}>
-              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{titleModal}</Text>
-              <AntDesign name="closecircle" size={24} color={color.primaryColor} style={{ position: 'absolute', right: 10 }}
-                onPress={() => setModalVisible(false)} />
+              <Text style={style.txtModalTitle}>{titleModal}</Text>
+              <AntDesign name="closecircle" size={24} color={color.primaryColor}
+                style={style.iconClose}
+                onPress={onHideModal} />
             </View>
 
             <View style={style.modalBody}>
@@ -198,13 +218,13 @@ const style = StyleSheet.create({
   header: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: '#2D8CFF',
+    borderBottomColor: color.slogan,
   },
   headerLogo: {
     width: 50.35,
     height: 50.35,
     borderRadius: 79.14,
-    backgroundColor: '#343542',
+    backgroundColor: color.appLogoBG,
     justifyContent: 'center',
     alignItems: 'center',
     margin: 20,
@@ -212,7 +232,7 @@ const style = StyleSheet.create({
   dot: {
     width: 8.39,
     height: 8.39,
-    backgroundColor: '#57C1EA',
+    backgroundColor: color.appDot,
     borderRadius: 5,
     position: 'absolute'
   },
@@ -298,5 +318,19 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
+  },
+  txtAccount: {
+    alignSelf: 'center',
+    fontWeight: 400,
+    fontSize: 15,
+    color: color.whiteColor,
+  },
+  txtModalTitle: {
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+  iconClose: {
+    position: 'absolute',
+    right: 10
   }
 })

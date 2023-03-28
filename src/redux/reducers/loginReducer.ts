@@ -4,7 +4,7 @@ const initialState = {
     isLoggedIn: false,
 }
 
-export default (state = initialState, action) => {
+export default (state = initialState, action: any) => {
     switch (action.type) {
         case 'LOGIN':
             return {

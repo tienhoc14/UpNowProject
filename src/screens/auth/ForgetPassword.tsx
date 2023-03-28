@@ -1,18 +1,18 @@
 import { View, Text, SafeAreaView, StyleSheet, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
-import { color } from '../assets/color'
+import { color } from '../../assets/color'
 import { Formik } from 'formik'
-import AppInput from '../components/AppInput'
-import { ResetPwSchema } from '../assets/validation'
+import AppInput from '../../components/AppInput'
+import { ResetPwSchema } from '../../assets/validation'
 import { sendPasswordResetEmail } from 'firebase/auth'
-import { auth } from '../../firebaseConfig'
+import { auth } from '../../../firebaseConfig'
 
-const ForgetPassword = () => {
+function ForgetPassword(): JSX.Element {
 
     const [txtSent, setTxtSent] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    const onHandleReset = async (email) => {
+    const onHandleReset = async (email: string) => {
         setIsLoading(true)
 
         sendPasswordResetEmail(auth, email)
@@ -31,7 +31,7 @@ const ForgetPassword = () => {
         <SafeAreaView style={style.container}>
             <View style={style.header}>
                 <View style={style.headerLogo}>
-                    <Image source={require('../assets/images/logo.png')} />
+                    <Image source={require('../../assets/images/logo.png')} />
                     <View style={style.dot} />
                 </View>
                 <View style={style.textWrapper}>
@@ -86,13 +86,13 @@ const style = StyleSheet.create({
     header: {
         flexDirection: 'row',
         borderBottomWidth: 1,
-        borderBottomColor: '#2D8CFF',
+        borderBottomColor: color.slogan,
     },
     headerLogo: {
         width: 50.35,
         height: 50.35,
         borderRadius: 79.14,
-        backgroundColor: '#343542',
+        backgroundColor: color.appLogoBG,
         justifyContent: 'center',
         alignItems: 'center',
         margin: 20,
@@ -100,7 +100,7 @@ const style = StyleSheet.create({
     dot: {
         width: 8.39,
         height: 8.39,
-        backgroundColor: '#57C1EA',
+        backgroundColor: color.appDot,
         borderRadius: 5,
         position: 'absolute'
     },

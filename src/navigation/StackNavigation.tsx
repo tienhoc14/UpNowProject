@@ -1,10 +1,10 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import LoginScreen from '../screens/LoginScreen';
-import RegisterScreen from '../screens/RegisterScreen';
 import DrawerNavigation from './DrawerNavigation';
 import { useSelector } from 'react-redux';
-import ForgetPassword from '../screens/ForgetPassword';
+import LoginScreen from '../screens/auth/LoginScreen';
+import RegisterScreen from '../screens/auth/RegisterScreen';
+import ForgetPassword from '../screens/auth/ForgetPassword';
 
 const Stack = createNativeStackNavigator();
 

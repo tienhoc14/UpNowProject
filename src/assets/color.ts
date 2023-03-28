@@ -1,0 +1,17 @@
+export const color = {
+    backgound: '#2D3748CC',
+    whiteColor: '#FFFFFF',
+    slogan: '#2D8CFF',
+    primaryColor: '#FF5789',
+    inputBG: '#00000033',
+    icon: "#A4BCC1",
+    inputPH: '#828187',
+    avatarBG: '#C9C9C9',
+    avatarCircle: '#4B5161',
+    drawerActive: '#F77098',
+    drawerInactive: '#959EA7',
+    appLogoBG: '#343542',
+    appDot: '#57C1EA',
+    fbBG: '#3F60B2',
+    appleBG: '#131416'
+}

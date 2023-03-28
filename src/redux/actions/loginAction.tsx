@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig';
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (email: string, password: string) => async (dispatch: any) => {
     return await signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             dispatch({

@@ -10,9 +10,9 @@ const AppInput = ({ icon, placeholder, value, onChangeText, children, secureText
                 secureTextEntry={secureTextEntry}
                 onChangeText={onChangeText}
                 value={value}
-                color={'white'}
+                color={color.whiteColor}
                 placeholder={placeholder}
-                placeholderTextColor={'#828187'}
+                placeholderTextColor={color.inputPH}
                 style={style.input} />
             {children}
         </View>

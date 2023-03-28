@@ -8,19 +8,19 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import { login } from '../redux/actions/loginAction'
-import { color } from '../assets/color'
+import { login } from '../../redux/actions/loginAction'
+import { color } from '../../assets/color'
 import { Formik } from 'formik'
-import { LoginSchema } from '../assets/validation'
+import { LoginSchema } from '../../assets/validation'
 
-const LoginScreen = () => {
+function LoginScreen(): JSX.Element {
     const navigation = useNavigation()
     const dispatch = useDispatch()
 
     const [visiblePassword, setVisiblePassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
-    const handleLogin = async (email, passwod) => {
+    const handleLogin = async (email: string, passwod: string) => {
         setIsLoading(true)
 
         dispatch(login(email, passwod))
@@ -38,19 +38,41 @@ const LoginScreen = () => {
     const urlFb = 'https://www.facebook.com/'
     const urlApple = 'https://appleid.apple.com/sign-in/'
 
-    const onLoginOther = (url) => useCallback(
+    const onLoginOther = (url: string) => useCallback(
         async () => {
             await Linking.openURL(url)
         },
         [url],
     )
 
+    const onTogglePassword = useCallback(
+        () => {
+            setVisiblePassword(!visiblePassword)
+        },
+        [visiblePassword],
+    )
+
+    const onForgetPassword = useCallback(
+        () => {
+            navigation.navigate('Forget')
+        },
+        [],
+    )
+
+    const onSignUp = useCallback(
+        () => {
+            navigation.navigate('Register')
+        },
+        [],
+    )
+
+
     return (
         <SafeAreaView style={style.container}>
-            <StatusBar backgroundColor={'#2D3748CC'} />
+            <StatusBar backgroundColor={color.backgound} />
             <View style={style.header}>
                 <View style={style.headerLogo}>
-                    <Image source={require('../assets/images/logo.png')} />
+                    <Image source={require('../../assets/images/logo.png')} />
                     <View style={style.dot} />
                 </View>
                 <View style={style.textWrapper}>
@@ -70,38 +92,37 @@ const LoginScreen = () => {
                         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                             <>
                                 <View style={style.inputWrapper}>
-                                    <Entypo name="mail" size={20} color="#A4BCC1" />
+                                    <Entypo name="mail" size={20} color={color.icon} />
                                     <TextInput
                                         onChangeText={handleChange('email')}
                                         onBlur={handleBlur('email')}
                                         value={values.email}
                                         color={'white'}
                                         placeholder='Email'
-                                        placeholderTextColor={'#828187'}
+                                        placeholderTextColor={color.inputPH}
                                         style={style.input} />
                                     {errors.email && touched.email ?
                                         <Text style={style.sigupLabel}>{errors.email}</Text> : null}
                                 </View>
 
                                 <View style={style.inputWrapper}>
-                                    <Fontisto name={'locked'} size={20} color={color.icon} style={{ marginLeft: 5, }} />
+                                    <Fontisto name={'locked'} size={20} color={color.icon} />
                                     <TextInput
                                         onChangeText={handleChange('password')}
                                         value={values.password}
                                         color={'white'}
                                         secureTextEntry={!visiblePassword}
-                                        placeholder=' Password'
-                                        placeholderTextColor={'#828187'}
+                                        placeholder='Password'
+                                        placeholderTextColor={color.inputPH}
                                         style={style.input} />
                                     <Ionicons name={visiblePassword ? "md-eye-outline" : "md-eye-off-outline"}
-                                        size={24} color="#A4BCC1" onPress={() => setVisiblePassword(!visiblePassword)} />
+                                        size={24} color={color.icon} onPress={onTogglePassword} />
                                 </View>
                                 {errors.password && touched.password ?
                                     <Text style={style.sigupLabel}>{errors.password}</Text> : null}
 
-
                                 <TouchableOpacity
-                                    onPress={() => { navigation.navigate('Forget') }}
+                                    onPress={onForgetPassword}
                                     style={style.forgetBtn}>
                                     <Text style={style.forget}>Forget password?</Text>
                                 </TouchableOpacity>
@@ -118,29 +139,29 @@ const LoginScreen = () => {
                     </Formik>
 
                     <View style={style.sigupWrapper} >
-                        <Text style={{ color: '#FFFFFF', fontSize: 15 }}> Don't have an account? </Text>
+                        <Text style={style.txtSignup}> Don't have an account? </Text>
                         <TouchableOpacity
-                            onPress={() => navigation.navigate('Register')}
+                            onPress={onSignUp}
                             style={style.sigupBtn}><Text style={style.sigupLabel}> Sign Up</Text></TouchableOpacity>
                     </View>
 
                     <View style={style.loginOther}>
                         <View style={style.line} />
-                        <Text style={{ color: '#FFFFFF', fontSize: 15, marginHorizontal: 16 }}>Or Log in with</Text>
+                        <Text style={style.txtLoginOther}>Or Log in with</Text>
                         <View style={style.line} />
                     </View>
 
                     <TouchableOpacity
                         onPress={onLoginOther(urlFb)}
                         style={[style.fbBtn, style.btnOther]}>
-                        <MaterialIcons name="facebook" size={24} color="#FFFFFF" style={{ position: 'absolute', left: 20 }} />
+                        <MaterialIcons name="facebook" size={24} color={color.whiteColor} style={style.otherIcons} />
                         <Text style={style.fbLabel}>Log in with Facebook</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={onLoginOther(urlApple)}
                         style={[style.appleBtn, style.btnOther]}>
-                        <AntDesign name="apple1" size={24} color="#FFFFFF" style={{ position: 'absolute', left: 20 }} />
+                        <AntDesign name="apple1" size={24} color={color.whiteColor} style={style.otherIcons} />
                         <Text style={style.fbLabel}>Log in with Apple</Text>
                     </TouchableOpacity>
                 </View>
@@ -160,13 +181,13 @@ const style = StyleSheet.create({
     header: {
         flexDirection: 'row',
         borderBottomWidth: 1,
-        borderBottomColor: '#2D8CFF',
+        borderBottomColor: color.slogan,
     },
     headerLogo: {
         width: 50.35,
         height: 50.35,
         borderRadius: 79.14,
-        backgroundColor: '#343542',
+        backgroundColor: color.appLogoBG,
         justifyContent: 'center',
         alignItems: 'center',
         margin: 20,
@@ -174,7 +195,7 @@ const style = StyleSheet.create({
     dot: {
         width: 8.39,
         height: 8.39,
-        backgroundColor: '#57C1EA',
+        backgroundColor: color.appDot,
         borderRadius: 5,
         position: 'absolute'
     },
@@ -257,7 +278,7 @@ const style = StyleSheet.create({
         borderBottomWidth: 1,
         flex: 1,
         marginBottom: 10,
-        borderColor: '#00000033',
+        borderColor: color.inputBG,
     },
     fbLabel: {
         fontWeight: 500,
@@ -275,9 +296,19 @@ const style = StyleSheet.create({
     fbBtn: {
         marginTop: 41,
         marginBottom: 18,
-        backgroundColor: '#3F60B2',
+        backgroundColor: color.fbBG,
     },
     appleBtn: {
-        backgroundColor: '#131416',
+        backgroundColor: color.appleBG,
+    },
+    txtSignup: {
+        color: color.whiteColor, fontSize: 15
+    },
+    txtLoginOther: {
+        color: color.whiteColor, fontSize: 15, marginHorizontal: 16
+    },
+    otherIcons: {
+        position: 'absolute',
+        left: 20
     }
 })
