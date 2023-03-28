@@ -86,7 +86,6 @@ const style = StyleSheet.create({
     logoutLabel: {
         color: '#FFFFFF',
         fontSize: 18,
-        fontFamily: 'Outfit-Black',
         fontWeight: 800,
     },
     streakWrapper: {

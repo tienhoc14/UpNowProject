@@ -47,7 +47,7 @@ const style = StyleSheet.create({
     },
     txtName: {
         color: color.whiteColor,
-        fontFamily: 'Outfit-Black',
+        // fontFamily: 'Outfit-Black',
         fontWeight: 900,
         fontSize: 24,
         marginLeft: 30,
@@ -55,7 +55,7 @@ const style = StyleSheet.create({
     txtFooter: {
         marginBottom: 32,
         color: color.whiteColor,
-        fontFamily: 'Outfit-Black',
+        // fontFamily: 'Outfit-Black',
         fontWeight: 300,
         fontSize: 15,
     },

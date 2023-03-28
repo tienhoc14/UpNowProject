@@ -105,13 +105,11 @@ const style = StyleSheet.create({
         position: 'absolute'
     },
     headerTitle: {
-        fontFamily: 'Outfit-Black',
         fontWeight: 900,
         fontSize: 24,
         color: color.whiteColor,
     },
     headerSlogan: {
-        fontFamily: 'Outfit-Black',
         fontWeight: 400,
         fontSize: 14.07,
         color: color.slogan,
@@ -125,7 +123,6 @@ const style = StyleSheet.create({
         flex: 1,
     },
     bodyTitle: {
-        fontFamily: 'Outfit-Black',
         fontWeight: 900,
         fontSize: 24,
         color: color.whiteColor,
@@ -143,7 +140,6 @@ const style = StyleSheet.create({
     },
     btnLabel: {
         color: color.whiteColor,
-        fontFamily: 'Outfit-Black',
         fontWeight: 800,
         fontSize: 18,
     },

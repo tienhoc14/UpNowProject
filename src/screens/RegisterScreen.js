@@ -21,7 +21,9 @@ const RegisterScreen = () => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+
   const [modalVisible, setModalVisible] = useState(false)
+  const [titleModal, setTitleModal] = useState()
 
   const onHandleRegister = async (firstName, lastName, email, password) => {
     setIsLoading(true)
@@ -117,9 +119,17 @@ const RegisterScreen = () => {
                   <Text style={style.txtConfirm}>
                     by clicking on “Register” you agree to our {"\n"}
                     <Text
-                      onPress={() => setModalVisible(true)}
+                      onPress={() => {
+                        setModalVisible(true)
+                        setTitleModal('Terms & Conditions')
+                      }}
                       style={{ color: color.primaryColor }}> Terms & Conditions </Text>and
-                    <Text style={{ color: color.primaryColor }}> Privacy Policy </Text>
+                    <Text
+                      onPress={() => {
+                        setModalVisible(true)
+                        setTitleModal('Privacy Policy')
+                      }}
+                      style={{ color: color.primaryColor }}> Privacy Policy </Text>
                   </Text>
                 </View>
               </View>
@@ -162,7 +172,7 @@ const RegisterScreen = () => {
         <View style={style.modalCentered}>
           <View style={style.modalView}>
             <View style={style.modalHeader}>
-              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Terms & Conditions</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{titleModal}</Text>
               <AntDesign name="closecircle" size={24} color={color.primaryColor} style={{ position: 'absolute', right: 10 }}
                 onPress={() => setModalVisible(false)} />
             </View>
