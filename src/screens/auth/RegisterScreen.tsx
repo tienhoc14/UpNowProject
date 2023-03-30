@@ -145,6 +145,8 @@ const RegisterScreen = () => {
                 <View style={style.confirmWrapper}>
                   <CheckBox
                     tintColors={{ true: color.primaryColor, false: color.icon }}
+                    onTintColor={color.primaryColor}
+                    onCheckColor={color.primaryColor}
                     disabled={false}
                     value={toggleCheckBox}
                     onValueChange={(newValue) => setToggleCheckBox(newValue)}

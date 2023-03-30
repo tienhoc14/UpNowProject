@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import loginReducer from "./reducers/loginReducer";
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import todoReducer from "./reducers/todoReducer";
 
 const { combineReducers, createStore, applyMiddleware } = require("redux");
 
@@ -13,7 +14,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-    account: loginReducer
+    account: loginReducer,
+    tasks: todoReducer
 })
 
 const pReducer = persistReducer(persistConfig, rootReducer)
