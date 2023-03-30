@@ -9,7 +9,10 @@ import CalendarPicker from 'react-native-calendar-picker';
 function HomeScreen(): JSX.Element {
     const navigation = useNavigation()
     const dispatch = useDispatch()
+
     const [checkStartDate, setCheckStartDate] = useState(false)
+    const [startDate, setStartDate] = useState()
+    const [isTransparent, setIsTransparent] = useState(false)
 
     const handleLogout = async () => {
         await dispatch({
@@ -19,8 +22,13 @@ function HomeScreen(): JSX.Element {
     }
 
     const onDateChange = (date: Date, type: string) => {
-        console.log(type + ' - ' + date);
         setCheckStartDate(!date || (date && type == 'START_DATE') ? true : false)
+        if (type === 'START_DATE') {
+            setStartDate(date)
+        }
+        if (type === 'END_DATE' && date) {
+            setIsTransparent(+startDate === +date ? true : false);
+        }
     }
 
     return (
@@ -35,7 +43,9 @@ function HomeScreen(): JSX.Element {
                     </View>
 
                     <View style={style.streakData}>
-                        <Text style={style.streakCurrent}>Current streak: 1</Text>
+                        <Text style={style.streakCurrent} onPress={() => {
+                            console.log(isTransparent);
+                        }} >Current streak: 1</Text>
                         <Text style={style.streakLongest}>Longest streak: 2</Text>
                     </View>
                 </View>
@@ -46,11 +56,14 @@ function HomeScreen(): JSX.Element {
                         allowRangeSelection={true}
                         todayBackgroundColor={color.icon}
                         textStyle={{ color: color.whiteColor }}
-                        selectedDayColor={color.primaryColor}
                         selectedRangeStartStyle={checkStartDate && {
                             borderRadius: 20,
                             maxWidth: 31,
                         }}
+                        selectedRangeStyle={{
+                            backgroundColor: isTransparent ? 'transparent' : color.primaryColor,
+                        }}
+                    // selectedRangeEndTextStyle={{}}
                     />
                 </View>
             </View>
