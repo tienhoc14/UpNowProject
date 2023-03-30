@@ -1,5 +1,5 @@
 import { View, Text, StatusBar, StyleSheet, Image, TouchableOpacity, SafeAreaView, } from 'react-native'
-import React, { } from 'react'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { color } from '../../assets/color'
@@ -9,6 +9,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 function HomeScreen(): JSX.Element {
     const navigation = useNavigation()
     const dispatch = useDispatch()
+    const [checkStartDate, setCheckStartDate] = useState(false)
 
     const handleLogout = async () => {
         await dispatch({
@@ -18,7 +19,8 @@ function HomeScreen(): JSX.Element {
     }
 
     const onDateChange = (date: Date, type: string) => {
-        console.log(type, ': ', date);
+        console.log(type + ' - ' + date);
+        setCheckStartDate(!date || (date && type == 'START_DATE') ? true : false)
     }
 
     return (
@@ -45,6 +47,10 @@ function HomeScreen(): JSX.Element {
                         todayBackgroundColor={color.icon}
                         textStyle={{ color: color.whiteColor }}
                         selectedDayColor={color.primaryColor}
+                        selectedRangeStartStyle={checkStartDate && {
+                            borderRadius: 20,
+                            maxWidth: 31,
+                        }}
                     />
                 </View>
             </View>
