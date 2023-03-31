@@ -15,9 +15,9 @@ export default function ToggleComponent() {
 
     useEffect(() => {
         if (active) {
-            switchTranslate.value = 44
+            switchTranslate.value = 75
         } else {
-            switchTranslate.value = 4
+            switchTranslate.value = 5
         }
 
         return () => { }
@@ -73,7 +73,7 @@ export default function ToggleComponent() {
 
 const styles = StyleSheet.create({
     container: {
-        width: 100,
+        width: 140,
         height: 60,
         backgroundColor: color.inputPH,
         borderRadius: 30,
