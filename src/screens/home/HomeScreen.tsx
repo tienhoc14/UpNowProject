@@ -29,6 +29,9 @@ function HomeScreen(): JSX.Element {
         if (type === 'END_DATE' && date) {
             setIsTransparent(+startDate === +date ? true : false);
         }
+        if (!date) {
+            setIsTransparent(false)
+        }
     }
 
     return (
