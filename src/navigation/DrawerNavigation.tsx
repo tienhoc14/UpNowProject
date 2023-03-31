@@ -19,7 +19,7 @@ const Drawer = createDrawerNavigator()
 const DrawerNavigation = () => {
     return (
         <Drawer.Navigator
-            initialRouteName='Home'
+            initialRouteName='Setting'
             screenOptions={{
                 headerShown: false,
                 overlayColor: 'transparent',
