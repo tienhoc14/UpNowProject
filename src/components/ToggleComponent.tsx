@@ -1,13 +1,26 @@
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { color } from '../assets/color'
 import Animated, { interpolate, useSharedValue, useAnimatedStyle, withSpring, withTiming, useDerivedValue, interpolateColor, Extrapolation } from 'react-native-reanimated'
 
 export default function ToggleComponent() {
 
     const switchTranslate = useSharedValue(0)
+    const animation = useSharedValue(0)
 
     const [active, setActive] = useState(false)
+
+    const width = useDerivedValue(() => {
+        return interpolate(animation.value,
+            [0, 1],
+            [50, 70])
+    })
+
+    const height = useDerivedValue(() => {
+        return interpolate(animation.value,
+            [0, 1],
+            [50, 70])
+    })
 
     const progress = useDerivedValue(() => {
         return withTiming(active ? 44 : 0)
@@ -39,31 +52,34 @@ export default function ToggleComponent() {
             transform: [
                 {
                     translateX: withSpring(switchTranslate.value, {
-                        mass: 1,
+                        mass: 4,
                         damping: 100,
                         overshootClamping: false,
                     })
                 }
-            ]
+            ],
+            width: width.value,
+            height: height.value,
         }
     })
 
-    const circleStyle = !active ? {
-        backgroundColor: color.whiteColor,
-        width: 50,
-        height: 50,
-        borderRadius: 30,
-    } : {
-        backgroundColor: color.primaryColor,
-        width: 70,
-        height: 70,
-        borderRadius: 40,
+    const circleStyle = {
+        backgroundColor: !active ? color.whiteColor : color.primaryColor,
+        borderRadius: 50,
     }
 
-    return (
-        <TouchableWithoutFeedback onPress={() => {
+    const onPressToggle = useCallback(
+        () => {
+            animation.value = withTiming(!active ? 1 : 0, {
+                duration: 1000
+            })
             setActive(!active)
-        }}>
+        },
+        [active],
+    )
+
+    return (
+        <TouchableWithoutFeedback onPress={onPressToggle}>
             <Animated.View style={[styles.container, backgroundColorStyle]}>
                 <Animated.View style={[customSpringStyles, circleStyle]} />
             </Animated.View>

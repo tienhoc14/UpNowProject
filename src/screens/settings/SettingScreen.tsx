@@ -3,11 +3,15 @@ import React from 'react'
 import AppContainer from '../../components/AppContainer'
 import AppMenu from '../../components/AppMenu'
 import ToggleComponent from '../../components/ToggleComponent'
+import { DemoComponent } from '../../components/DemoComponent'
 
 const SettingScreen = () => {
     return (
         <AppContainer>
             <AppMenu />
+
+            <DemoComponent />
+
             <View style={styles.toggleWrapper}>
                 <ToggleComponent />
             </View>
