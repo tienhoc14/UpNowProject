@@ -9,9 +9,6 @@ const SettingScreen = () => {
     return (
         <AppContainer>
             <AppMenu />
-
-            <DemoComponent />
-
             <View style={styles.toggleWrapper}>
                 <ToggleComponent />
             </View>
