@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import LoginScreen from '../screens/auth/LoginScreen';
 import RegisterScreen from '../screens/auth/RegisterScreen';
 import ForgetPassword from '../screens/auth/ForgetPassword';
+import UserInforScreen from '../screens/profile/UserInforScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ const StackNavigation = () => {
         >
             {userData.isLoggedIn ? <>
                 <Stack.Screen name='Drawer' component={DrawerNavigation} />
+                <Stack.Screen name='UserInfo' component={UserInforScreen} />
             </>
                 : <>
                     <Stack.Screen name='Login' component={LoginScreen} />

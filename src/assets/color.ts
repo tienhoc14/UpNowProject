@@ -13,5 +13,5 @@ export const color = {
     appLogoBG: '#343542',
     appDot: '#57C1EA',
     fbBG: '#3F60B2',
-    appleBG: '#131416'
+    appleBG: '#131416',
 }
