@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native'
 import StackNavigation from './src/navigation/StackNavigation';
@@ -13,8 +13,19 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './src/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import AppLoading from './src/components/AppLoading';
+import { NotificationListener, requestUserPermission } from './src/utils/pushNotificationHelper';
 
 function App(): JSX.Element {
+
+  useEffect(() => {
+    requestUserPermission()
+    NotificationListener()
+
+    return () => {
+
+    }
+  }, [])
+
 
   return (
     <Provider store={store}>

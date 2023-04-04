@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "813633858297",
+    "project_id": "up-now-d7e61",
+    "storage_bucket": "up-now-d7e61.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813633858297:android:9e973c1bb979ed6c8c1028",
+        "android_client_info": {
+          "package_name": "com.upnowproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813633858297-ipvc9oi7jb8kqnggusgr0lnj0dr915ih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8JE6uxN4_2P1sfz80W_dFpvvR2LVAEi4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813633858297-ipvc9oi7jb8kqnggusgr0lnj0dr915ih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
