@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { color } from '../../assets/color'
 import AppContainer from '../../components/AppContainer'
@@ -8,18 +8,27 @@ import TaskComponent from '../../components/TaskComponent'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import AppInput from '../../components/AppInput'
 import { addTask } from '../../redux/actions/todoAction'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { newListState, todoListState } from '../../recoil/listState'
 
 const ReminderScreen = () => {
 
     const [newTask, setNewTask] = useState('')
 
-    const todoList = useSelector(store => store.tasks.todoList)
-    const dispatch = useDispatch()
+    // const todoList = useSelector(store => store.tasks.todoList)
+    // const dispatch = useDispatch()
+
+    const [todoList, setTodoList] = useRecoilState(todoListState)
 
     const onAddTask = useCallback(
         () => {
-            dispatch(addTask(newTask))
-            setNewTask()
+            if (!newTask) {
+                Alert.alert('Empty task', 'Enter your task to add')
+                return
+            }
+            // dispatch(addTask(newTask))
+            setTodoList((todoList) => [...todoList, { title: newTask }])
+            setNewTask('')
         },
         [newTask],
     )

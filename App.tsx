@@ -14,6 +14,7 @@ import { persistor, store } from './src/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import AppLoading from './src/components/AppLoading';
 import { NotificationListener, requestUserPermission } from './src/utils/pushNotificationHelper';
+import { RecoilRoot } from 'recoil';
 
 function App(): JSX.Element {
 
@@ -28,13 +29,15 @@ function App(): JSX.Element {
 
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={<AppLoading />} persistor={persistor} >
-        <NavigationContainer>
-          <StackNavigation />
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
+    <RecoilRoot>
+      <Provider store={store}>
+        <PersistGate loading={<AppLoading />} persistor={persistor} >
+          <NavigationContainer>
+            <StackNavigation />
+          </NavigationContainer>
+        </PersistGate>
+      </Provider>
+    </RecoilRoot>
   );
 }
 
