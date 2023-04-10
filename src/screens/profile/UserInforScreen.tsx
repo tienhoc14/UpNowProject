@@ -13,7 +13,7 @@ export default function UserInforScreen() {
 
     const onGoBack = useCallback(
         () => {
-            navigation.goBack('Drawer')
+            navigation.goBack()
         },
         [],
     )

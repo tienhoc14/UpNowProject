@@ -13,7 +13,7 @@ const SettingScreen = () => {
 
     const onGoBack = useCallback(
         () => {
-            navigation.goBack('Home')
+            navigation.goBack()
         },
         [],
     )

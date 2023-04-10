@@ -13,13 +13,14 @@ import HomeScreen from '../screens/home/HomeScreen'
 import ReminderScreen from '../screens/reminder/ReminderScreen'
 import SettingScreen from '../screens/settings/SettingScreen'
 import RewardsScreen from '../screens/rewards/RewardsScreen'
+import ChatScreen from '../screens/chat/ChatList'
 
 const Drawer = createDrawerNavigator()
 
 const DrawerNavigation = () => {
     return (
         <Drawer.Navigator
-            initialRouteName='Home'
+            initialRouteName='Send a testimonial'
             screenOptions={{
                 headerShown: false,
                 overlayColor: 'transparent',
@@ -45,7 +46,7 @@ const DrawerNavigation = () => {
                     return <Ionicons name="person-outline" size={size} color={color} />
                 }
             }} />
-            <Drawer.Screen name='Send a testimonial' component={SettingScreen} options={{
+            <Drawer.Screen name='Send a testimonial' component={ChatScreen} options={{
                 drawerIcon: ({ color, size }) => {
                     return <Fontisto name="email" size={size} color={color} />
                 }

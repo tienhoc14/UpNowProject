@@ -15,7 +15,7 @@ async function requestUserPermission() {
 
 async function getFCMToken() {
     let fcmToken = await AsyncStorage.getItem('fcmToken')
-    console.log(fcmToken);
+    console.log('device token: ', fcmToken);
 
     if (!fcmToken) {
         try {
