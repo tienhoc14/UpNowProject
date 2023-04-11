@@ -27,7 +27,6 @@ function App(): JSX.Element {
     }
   }, [])
 
-
   return (
     <RecoilRoot>
       <Provider store={store}>

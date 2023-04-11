@@ -27,7 +27,10 @@ const ReminderScreen = () => {
                 return
             }
             // dispatch(addTask(newTask))
-            setTodoList((todoList) => [...todoList, { title: newTask }])
+            setTodoList((todoList) => [...todoList, {
+                title: newTask,
+                completed: false
+            }])
             setNewTask('')
         },
         [newTask],

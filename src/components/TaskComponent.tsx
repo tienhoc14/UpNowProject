@@ -7,7 +7,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useDispatch } from 'react-redux'
 import { TextInput } from 'react-native-gesture-handler'
-import { deleteTask, updateTask } from '../redux/actions/todoAction'
+// import { deleteTask, updateTask } from '../redux/actions/todoAction'
+import { useSetRecoilState } from 'recoil'
+import { deleteTask, updateTask } from '../recoil/listState'
 
 export default function TaskComponent({ taskTitle, completed }) {
 
@@ -16,18 +18,25 @@ export default function TaskComponent({ taskTitle, completed }) {
     const [inputVisible, setInputVisible] = useState(false)
     const [newTitle, setNewTitle] = useState()
 
+    // recoil
+    const removeTask = useSetRecoilState(deleteTask)
+    const editTask = useSetRecoilState(updateTask)
+
     const onDeleteTask = useCallback(
         () => {
-            dispatch(deleteTask(taskTitle))
+            // dispatch(deleteTask(taskTitle))
+            removeTask(taskTitle)
         },
         [],
     )
 
     const onUpdateTask = useCallback(
         () => {
-            dispatch(updateTask(taskTitle, newTitle, completed))
+            // dispatch(updateTask(taskTitle, newTitle, completed))
+            editTask({ taskTitle, newTitle, completed })
+
             setInputVisible(false)
-            setNewTitle()
+            setNewTitle('')
         },
         [newTitle, inputVisible],
     )
@@ -41,7 +50,8 @@ export default function TaskComponent({ taskTitle, completed }) {
 
     const onCompleteTask = useCallback(
         (value: boolean) => {
-            dispatch(updateTask(taskTitle, taskTitle, value))
+            // dispatch(updateTask(taskTitle, taskTitle, value))
+            editTask({ taskTitle, newTitle: taskTitle, completed: value })
         },
         [],
     )

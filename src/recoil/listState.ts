@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AtomEffect, DefaultValue, atom, selector } from "recoil";
-import { recoilPersist } from "recoil-persist";
 
 const persistAtom: AtomEffect<any> = ({ node, setSelf, onSet }) => {
     setSelf(
@@ -24,19 +23,35 @@ export const todoListState = atom({
     effects_UNSTABLE: [persistAtom],
 })
 
-export const newListState = selector({
-    key: 'newList',
+export const deleteTask = selector({
+    key: 'deleteTask',
     get: ({ get }) => {
-        const list = get(todoListState)
-        return list
+        return get(todoListState)
     },
     set: ({ get, set }, title) => {
-        const list = get(todoListState)
-        const newTask = {
-            title: title,
-            completed: false
-        }
+        const currentList = get(todoListState)
+        const newTotoList = currentList.filter(task => task.title !== title)
 
-        set(todoListState, [...list, newTask])
+        set(todoListState, newTotoList)
+    }
+})
+
+export const updateTask = selector({
+    key: 'updateTask',
+    get: ({ get }) => {
+        return get(todoListState)
+    },
+    set: ({ get, set }, { taskTitle, newTitle, completed }) => {
+        const currentList = get(todoListState)
+        const index = currentList.findIndex((task) => task.title === taskTitle)
+        const newList = currentList.map(
+            (task, i) => i === index ?
+                {
+                    title: newTitle,
+                    completed: completed
+                } : task
+        )
+
+        set(todoListState, newList)
     }
 })
