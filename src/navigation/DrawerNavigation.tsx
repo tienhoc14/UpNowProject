@@ -13,7 +13,7 @@ import HomeScreen from '../screens/home/HomeScreen'
 import ReminderScreen from '../screens/reminder/ReminderScreen'
 import SettingScreen from '../screens/settings/SettingScreen'
 import RewardsScreen from '../screens/rewards/RewardsScreen'
-import ChatScreen from '../screens/chat/ChatList'
+import ChatScreen from '../screens/chat/ChatScreen'
 
 const Drawer = createDrawerNavigator()
 

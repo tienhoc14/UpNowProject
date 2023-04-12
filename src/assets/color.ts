@@ -15,3 +15,11 @@ export const color = {
     fbBG: '#3F60B2',
     appleBG: '#131416',
 }
+
+export const chatColor = {
+    primary: '#E75437',
+    grey: '#C7C6C5',
+    white: '#FFFFFF',
+    darkGray: '#A4A7AD',
+    black: '#333030'
+}
