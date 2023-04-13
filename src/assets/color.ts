@@ -21,5 +21,6 @@ export const chatColor = {
     grey: '#C7C6C5',
     white: '#FFFFFF',
     darkGray: '#A4A7AD',
-    black: '#333030'
+    black: '#333030',
+    modalBG: '#333030'
 }
