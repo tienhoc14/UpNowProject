@@ -3,8 +3,8 @@ import React, { useCallback, useState } from 'react'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { chatColor } from '../../assets/color'
-import DetailTab from '../../components/chat/DetailTab'
-import ChatTab from '../../components/chat/ChatTab'
+import DetailTab from './components/DetailTab'
+import ChatTab from './components/ChatTab'
 import { useNetInfo } from '@react-native-community/netinfo'
 
 const windowWidth = Dimensions.get('window').width
